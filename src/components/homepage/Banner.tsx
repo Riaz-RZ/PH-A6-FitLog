@@ -3,7 +3,7 @@ import bannerimage from "@/assets/banner.png";
 
 const Banner = () => {
     return (
-        <section className="relative z-0 overflow-hidden rounded-3xl mt-6 bg-[#222630] mx-20">
+        <section className="relative z-0 overflow-hidden rounded-3xl mt-6 bg-[#222630] border shadow-xs border-gray-600 mx-auto container">
             <div className="relative grid grid-cols-1 md:grid-cols-2 items-center px-6 md:px-12 lg:px-16 py-10 md:py-14">
 
                 {/* Left Content */}
