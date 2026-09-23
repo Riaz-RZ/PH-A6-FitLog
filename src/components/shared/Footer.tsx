@@ -4,7 +4,7 @@ import logo from "@/assets/logo.png";
 
 const Footer = () => {
     return (
-        <footer className="footer sm:footer-horizontal bg-neutral text-neutral-content items-center p-6 shadow-xs border-t border-gray-600">
+        <footer className="footer sm:footer-horizontal bg-base-400 items-center p-6 shadow-xs border-t border-gray-600">
             <div className="container mx-auto grid grid-cols-2">
                 
                 <aside className="flex items-center gap-3">

@@ -8,7 +8,7 @@ const Navbar = () => {
             <li>
                 <Link
                     href="/workouts"
-                    className="font-medium text-gray-700 hover:text-green-600 transition-colors"
+                    className="font-medium text-gray-700 hover:text-[#C2F800] transition-colors rounded-full"
                 >
                     Workouts
                 </Link>
@@ -16,7 +16,7 @@ const Navbar = () => {
             <li>
                 <Link
                     href="/myplan"
-                    className="font-medium text-gray-700 hover:text-green-600 transition-colors"
+                    className="font-medium text-gray-700 hover:text-[#C2F800] transition-colors rounded-full"
                 >
                     My Plan
                 </Link>
@@ -58,6 +58,7 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
+                    
                     <ul className="menu menu-horizontal px-1">
                         {links}
                     </ul>

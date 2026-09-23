@@ -15,13 +15,15 @@ const TheLibrary = async () => {
     return (
         <section className="container mx-auto my-16">
             <h1 className="font-bold text-4xl">THE LIBRARY</h1>
-            <p className="text-gray-400 pt-2">Twelve lifts covering every major muscle group</p>
+            <p className="text-gray-400 pt-2 pb-6">Twelve lifts covering every major muscle group</p>
 
 
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {libraryData.map((library: ILibrary, ind: number) => {
+                    return <LibraryCard key={ind} library={library} />
+                })}
+            </div>
 
-            {libraryData.map((library:ILibrary, ind: number) => {
-                return <LibraryCard key={ind} library={library}/>
-            })}
         </section>
 
 
