@@ -4,14 +4,20 @@ import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { useContext } from "react";
 import { WorkoutsContext } from "@/context/WorkoutsContext";
+import { ILibrary } from "@/types/library.types";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+    const pathname = usePathname();
     const links = (
         <>
             <li>
                 <Link
                     href="/workouts"
-                    className="font-medium text-gray-700 hover:text-[#C2F800] transition-colors rounded-full"
+                    className={`rounded-full px-4 py-2 font-medium transition-colors ${pathname === "/workouts"
+                            ? "bg-gray-800 text-[#C2F800]"
+                            : "text-gray-400 hover:bg-[#C2F800] hover:text-black"
+                        }`}
                 >
                     Workouts
                 </Link>
@@ -19,21 +25,27 @@ const Navbar = () => {
             <li>
                 <Link
                     href="/myplan"
-                    className="font-medium text-gray-700 hover:text-[#C2F800] transition-colors rounded-full"
+                    className={`rounded-full px-4 py-2 font-medium transition-colors ${pathname === "/myplan"
+                            ? "bg-gray-800 text-[#C2F800]"
+                            : "text-gray-400 hover:bg-[#C2F800] hover:text-black"
+                        }`}
                 >
                     My Plan
                 </Link>
             </li>
         </>
     );
-    const { todaysPlan, save } = useContext(WorkoutsContext);
+    const { todaysPlan, save } = useContext(WorkoutsContext) as {
+        todaysPlan: ILibrary[];
+        save: ILibrary[];
+    };
 
     const planCount = todaysPlan.length;
     const savedCount = save.length;
 
     return (
         <nav className="sticky top-0 z-50 bg-black shadow-xs border-b border-gray-600">
-            <div className="navbar container mx-auto">
+            <div className="navbar container mx-auto px-28">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -65,18 +77,36 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    
+
                     <ul className="menu menu-horizontal px-1">
                         {links}
                     </ul>
                 </div>
                 <div className="navbar-end gap-4">
-                    <button className=" text-gray-400 me-4 px-4 py-0.5">Plan<span className="badge badge-sm bg-[#c7ff00] text-black border-0 mx-3 font-bold">
-                                    {planCount}
-                                </span></button>
-                    <button className="text-gray-400 px-4 py-0.5">Saved<span className="badge badge-sm bg-black text-white border-2 mx-3 font-bold">
-                                    {savedCount}
-                                </span></button>
+                    <Link
+                        href="/myplan"
+                        onClick={() => {
+                            sessionStorage.setItem("myplan-tab", "today");
+                            window.dispatchEvent(new CustomEvent("myplan-tab", { detail: "today" }));
+                        }}
+                        className="text-gray-400 me-4 px-4 py-0.5"
+                    >
+                        Plan<span className="badge badge-sm bg-[#c7ff00] text-black border-0 mx-3 font-bold">
+                        {planCount}
+                        </span>
+                    </Link>
+                    <Link
+                        href="/myplan"
+                        onClick={() => {
+                            sessionStorage.setItem("myplan-tab", "saved");
+                            window.dispatchEvent(new CustomEvent("myplan-tab", { detail: "saved" }));
+                        }}
+                        className="text-gray-400 px-4 py-0.5"
+                    >
+                        Saved<span className="badge badge-sm bg-black text-white border-2 mx-3 font-bold">
+                        {savedCount}
+                        </span>
+                    </Link>
                 </div>
             </div>
         </nav>

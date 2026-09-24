@@ -82,7 +82,7 @@ const LibraryCard = ({ library }: ILibraryCardProps) => {
 
                         {/* Rating */}
                         <div className="flex items-center gap-2">
-                            <FiStar className="shrink-0  text-gray-400" />
+                            <FiStar className="shrink-0  text-gray-400 ms-3" />
 
                             <div>
                                 <p className="text-sm text-gray-400">

@@ -32,7 +32,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Navbar />
           {children}
           <Footer />
-          <ToastContainer />
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            toastClassName="!w-[260px] !min-h-0"
+            bodyClassName="text-sm" />
         </WorkoutsProvider>
 
       </body>

@@ -37,7 +37,7 @@ const workoutsDetailPage = async ({ params }: IWorkoutsDetailPageProps) => {
                     <div className="grid gap-7 lg:grid-cols-[1fr_1fr]">
 
                         {/* ================= IMAGE ================= */}
-                       <div className="relative h-[350px] overflow-hidden rounded-lg md:h-[450px] lg:h-[calc(100vh-190px)] lg:max-h-[560px]">
+                       <div className="relative h-87.5 overflow-hidden rounded-lg md:h-112.5 lg:h-[calc(100vh-190px)] lg:max-h-140">
 
                             <Image
                                 src={workout.image}

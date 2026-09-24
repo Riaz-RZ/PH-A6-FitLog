@@ -18,46 +18,49 @@ const TheLibrary = async () => {
 
     return (
         <div>
-        <section className="relative z-0 overflow-hidden rounded-3xl mt-6 bg-base-300 border shadow-xs border-gray-600 mx-auto container">
-            <div className="relative grid grid-cols-1 md:grid-cols-2 items-center px-6 md:px-12 lg:px-16 py-10 md:py-14">
+         <section className="mt-6">
+            <div className="container mx-auto px-28">
 
-                {/* Left Content */}
-                <div className="text-center md:text-left">
-                    
-                    <p className="text-[#C2F800] font-semibold text-sm md:text-base uppercase tracking-widest mb-3">
-                        WORKOUT LIBRARY
-                    </p>
+                <div className="grid grid-cols-1 items-center overflow-hidden rounded-3xl border border-gray-600 bg-base-300 shadow-xs md:grid-cols-2">
 
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
-                        TRAIN WITH INTENT. LOG
-                        <br />
-                        EVERY SET.
-                    </h2>
+                    {/* Left Content */}
+                    <div className="ps-7 py-10 text-center md:py-14 md:text-left">
 
-                    <p className="mt-5 max-w-lg text-gray-400 text-base md:text-lg leading-relaxed">
-                        FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
-                        <br />
-                        into today's plan, and watch the week's work add up.
-                    </p>
+                        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#C2F800] md:text-base">
+                            WORKOUT LIBRARY
+                        </p>
 
-                    <button className="mt-8 inline-flex items-center gap-2 rounded-xl bg-[#C2F800] px-7 py-3.5 text-lg font-semibold text-black shadow-lg shadow-green-600/20 transition-all duration-300 hover:bg-green-700 hover:-translate-y-1 hover:shadow-xl">
-                        BROWSE WORKOUTS
-                    </button>
+                        <h2 className="text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
+                            TRAIN WITH INTENT. LOG
+                            <br />
+                            EVERY SET.
+                        </h2>
+
+                        <p className="mt-5 max-w-lg text-base leading-relaxed text-gray-400 md:text-lg">
+                            FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
+                            <br />
+                            into today's plan, and watch the week's work add up.
+                        </p>
+
+                        <button className="mt-8 inline-flex items-center gap-2 rounded-xl bg-[#C2F800] px-7 py-3.5 text-lg font-semibold text-black shadow-lg shadow-green-600/20 transition-all duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-xl">
+                            BROWSE WORKOUTS
+                        </button>
+                    </div>
+
+                    {/* Right Image */}
+                    <div className="mt-10 flex justify-center md:mt-0 md:justify-end">
+                        <Image
+                            src={bannerimage}
+                            alt="FitLog workout banner"
+                            priority
+                            className="w-full max-w-sm object-contain drop-shadow-2xl md:max-w-md lg:max-w-md py-8"
+                        />
+                    </div>
+
                 </div>
-
-                {/* Right Image */}
-                <div className="flex justify-center md:justify-end mt-10 md:mt-0">
-                    <Image
-                        src={bannerimage}
-                        alt="Books Banner"
-                        priority
-                        className="w-full max-w-sm md:max-w-md lg:max-w-lg object-contain drop-shadow-2xl"
-                    />
-                </div>
-
             </div>
         </section>
-        <section className="container mx-auto my-16">
+        <section className="container mx-auto my-16 px-28">
             <h1 className="font-bold text-4xl">THE LIBRARY</h1>
             <p className="text-gray-400 pt-2 pb-6">Twelve lifts covering every major muscle group</p>
 

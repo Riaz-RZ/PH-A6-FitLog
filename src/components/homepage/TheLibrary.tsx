@@ -13,7 +13,7 @@ const TheLibrary = async () => {
     console.log(libraryData, "librarydata");
 
     return (
-        <section className="container mx-auto my-16">
+        <section className="container mx-auto my-16 px-28">
             <h1 className="font-bold text-4xl">THE LIBRARY</h1>
             <p className="text-gray-400 pt-2 pb-6">Twelve lifts covering every major muscle group</p>
 

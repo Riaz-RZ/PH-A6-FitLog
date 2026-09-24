@@ -4,7 +4,7 @@ import { WorkoutsContext } from "@/context/WorkoutsContext";
 import { ILibrary } from "@/types/library.types";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
     FiCheck,
     FiClock,
@@ -15,12 +15,47 @@ import { MdLocalFireDepartment } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const MyPlanPage = () => {
-    const { todaysPlan, setTodaysPlan, save, setSave } = useContext(WorkoutsContext);
+    const { todaysPlan, setTodaysPlan, save, setSave } = useContext(WorkoutsContext) as {
+        todaysPlan: ILibrary[];
+        setTodaysPlan: React.Dispatch<React.SetStateAction<ILibrary[]>>;
+        save: ILibrary[];
+        setSave: React.Dispatch<React.SetStateAction<ILibrary[]>>;
+    };
 
     const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
+    const [sortBy, setSortBy] = useState<"duration" | "calories" | "rating">("duration");
+
+    useEffect(() => {
+        const updateTabFromNavigation = (event?: Event) => {
+            const requestedTab = event
+                ? (event as CustomEvent<"today" | "saved">).detail
+                : sessionStorage.getItem("myplan-tab");
+
+            if (requestedTab === "today" || requestedTab === "saved") {
+                setActiveTab(requestedTab);
+                sessionStorage.removeItem("myplan-tab");
+            }
+        };
+
+        updateTabFromNavigation();
+        window.addEventListener("myplan-tab", updateTabFromNavigation);
+
+        return () => window.removeEventListener("myplan-tab", updateTabFromNavigation);
+    }, []);
 
     const plan: ILibrary[] =
         activeTab === "today" ? todaysPlan : save;
+    const sortedPlan = [...plan].sort((firstWorkout, secondWorkout) => {
+        if (sortBy === "duration") {
+            return firstWorkout.duration - secondWorkout.duration;
+        }
+
+        if (sortBy === "calories") {
+            return secondWorkout.caloriesBurned - firstWorkout.caloriesBurned;
+        }
+
+        return secondWorkout.rating - firstWorkout.rating;
+    });
     const handleRemove = (id: number) => {
         if (activeTab === "today") {
             setTodaysPlan((prev) =>
@@ -116,7 +151,7 @@ const MyPlanPage = () => {
                                 : "text-white"
                                 }`}
                         >
-                            Today's Plan
+                            Today&apos;s Plan
                         </button>
 
                         <button
@@ -138,10 +173,14 @@ const MyPlanPage = () => {
                             Sort By
                         </span>
 
-                        <select className="select select-xs h-8 min-h-8 rounded-md border-[#252830] bg-[#15181e] text-[12px] text-gray-300">
-                            <option>Duration</option>
-                            <option>Calories</option>
-                            <option>Rating</option>
+                        <select
+                            value={sortBy}
+                            onChange={(event) => setSortBy(event.target.value as typeof sortBy)}
+                            className="select select-xs h-8 min-h-8 rounded-md border-[#252830] bg-[#15181e] text-[12px] text-gray-300"
+                        >
+                            <option value="duration">Duration</option>
+                            <option value="calories">Calories</option>
+                            <option value="rating">Rating</option>
                         </select>
                     </div>
 
@@ -177,7 +216,7 @@ const MyPlanPage = () => {
                     /* WORKOUT LIST */
                     <section className="mt-3">
 
-                        {plan.map((workout) => (
+                        {sortedPlan.map((workout) => (
                             <div
                                 key={workout.id}
                                 className="group flex overflow-hidden rounded-xl border border-[#252830] bg-[#101216] transition hover:border-[#c7ff00]/40 my-4"
