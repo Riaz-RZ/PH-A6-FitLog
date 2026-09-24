@@ -2,7 +2,7 @@
 import { ILibrary } from "@/types/library.types";
 import Image from "next/image";
 import Link from "next/link";
-import { FiClock, FiStar, FiArrowUpRight } from "react-icons/fi";
+import { FiClock, FiStar } from "react-icons/fi";
 import { MdLocalFireDepartment } from "react-icons/md";
 
 interface ILibraryCardProps {
@@ -12,7 +12,7 @@ interface ILibraryCardProps {
 const LibraryCard = ({ library }: ILibraryCardProps) => {
     return (
         <Link
-            href={`/library/${library.id}`}
+            href={`/workouts/${library.id}`}
             className="group block"
         >
             <div className="overflow-hidden rounded-2xl border border-base-300 bg-base-300 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
