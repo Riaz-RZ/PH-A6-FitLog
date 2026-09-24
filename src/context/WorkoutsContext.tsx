@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, useState } from "react";
 
-const WorkoutsContext = createContext({});
+export const WorkoutsContext = createContext({});
 
 const WorkoutsProvider = ({children}: {children: ReactNode}) => {
     const [todaysPlan, setTodaysPlan] = useState([]);

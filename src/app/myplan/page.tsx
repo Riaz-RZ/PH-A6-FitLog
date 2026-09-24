@@ -1,6 +1,11 @@
-import React from 'react';
+"use client"
+import { WorkoutsContext } from '@/context/WorkoutsContext';
+import { useContext } from 'react';
 
-const page = () => {
+const MyPlanPage = () => {
+
+    const {todaysPlan} = useContext(WorkoutsContext);
+    console.log(todaysPlan, "todays plan"); 
     return (
         <div>
             Myy plan page
@@ -8,4 +13,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default MyPlanPage;
