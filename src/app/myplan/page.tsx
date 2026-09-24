@@ -4,17 +4,22 @@ import { WorkoutsContext } from "@/context/WorkoutsContext";
 import { ILibrary } from "@/types/library.types";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
+    FiCheck,
     FiClock,
-    FiTrash2
+    FiStar,
+    FiX
 } from "react-icons/fi";
 import { MdLocalFireDepartment } from "react-icons/md";
 
 const MyPlanPage = () => {
-    const { todaysPlan } = useContext(WorkoutsContext);
+    const { todaysPlan, save } = useContext(WorkoutsContext);
 
-    const plan: ILibrary[] = todaysPlan ?? [];
+    const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
+
+    const plan: ILibrary[] =
+        activeTab === "today" ? todaysPlan : save;
 
     // Calculate summary
     const totalMinutes = plan.reduce(
@@ -90,11 +95,23 @@ const MyPlanPage = () => {
                     {/* Tabs */}
                     <div className="flex rounded-lg border border-[#252830] bg-[#15181e] p-1">
 
-                        <button className="rounded-md bg-[#252830] px-4 py-2 text-sm font-medium text-white">
+                        <button
+                            onClick={() => setActiveTab("today")}
+                            className={`rounded-md px-4 py-2 text-sm font-medium transition cursor-pointer ${activeTab === "today"
+                                    ? "bg-[#252830] text-white"
+                                    : "text-gray-400 hover:text-white"
+                                }`}
+                        >
                             Today's Plan
                         </button>
 
-                        <button className="rounded-md px-4 py-2 text-sm text-gray-400 transition hover:text-white">
+                        <button
+                            onClick={() => setActiveTab("saved")}
+                            className={`rounded-md px-4 py-2 text-sm font-medium transition cursor-pointer ${activeTab === "saved"
+                                    ? "bg-[#252830] text-white"
+                                    : "text-gray-400 hover:text-white"
+                                }`}
+                        >
                             Saved
                         </button>
 
@@ -137,7 +154,7 @@ const MyPlanPage = () => {
                             className="mt-4 flex items-center gap-2 rounded-full bg-[#c7ff00] px-5 py-2 text-sm font-bold text-black transition hover:bg-[#b8ef00]"
                         >
                             Go to workouts
-                           
+
                         </Link>
 
                     </section>
@@ -145,77 +162,93 @@ const MyPlanPage = () => {
                 ) : (
 
                     /* WORKOUT LIST */
-                    <section className="mt-3 grid gap-3 md:grid-cols-2">
+                    <section className="mt-3">
 
                         {plan.map((workout) => (
                             <div
                                 key={workout.id}
-                                className="group flex overflow-hidden rounded-xl border border-[#252830] bg-[#101216] transition hover:border-[#c7ff00]/40"
+                                className="group flex overflow-hidden rounded-xl border border-[#252830] bg-[#101216] transition hover:border-[#c7ff00]/40 my-4"
                             >
 
                                 {/* Image */}
-                                <div className="relative h-36 w-32 shrink-0 overflow-hidden sm:h-40 sm:w-40">
+                                <div className="m-3 aspect-[3/2] w-32 shrink-0 overflow-hidden rounded-xl sm:w-40">
                                     <Image
                                         src={workout.image}
                                         alt={workout.name}
-                                        width={80}
-                                        height={80}
-                                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                        width={300}
+                                        height={450}
+                                        className="h-full w-full object-cover"
                                     />
                                 </div>
 
 
                                 {/* Content */}
-                                <div className="flex flex-1 flex-col p-4">
+                                <div className="flex flex-1 flex-col p-6">
 
                                     <div className="flex items-start justify-between gap-3">
 
                                         <div>
-                                            <div className="mb-2 flex flex-wrap gap-1">
-                                                {workout.muscleGroups.map(
-                                                    (muscle) => (
-                                                        <span
-                                                            key={muscle}
-                                                            className="rounded-full bg-[#c7ff00] px-2 py-0.5 text-[8px] font-bold uppercase text-black"
-                                                        >
-                                                            {muscle}
-                                                        </span>
-                                                    )
-                                                )}
-                                            </div>
-
                                             <h2 className="text-sm font-black uppercase">
                                                 {workout.name}
                                             </h2>
+                                            <h2 className="text-sm  text-gray-400 mt-2.5">
+                                                {workout.equipment}
+                                            </h2>
                                         </div>
+                                        {/* ================= BUTTONS ================= */}
+                                        <div className="mt-auto flex items-center justify-between gap-3 pt-5">
 
-                                        <button className="text-gray-600 transition hover:text-red-400">
-                                            <FiTrash2 />
-                                        </button>
+                                            {/* Left Buttons */}
+                                            <div className="flex flex-wrap gap-6">
 
+                                                <Link
+                                                    href={`/workouts/${workout.id}`}
+                                                    className="rounded-2xl border border-[#363a42] bg-[#15181e] px-3 py-2 text-xs font-medium text-gray-300 transition hover:border-[#c7ff00] hover:text-[#c7ff00]"
+                                                >
+                                                    View Details
+                                                </Link>
+
+                                                <button
+                                                    className="rounded-2xl bg-[#c7ff00] px-3 py-2 text-xs font-bold text-black transition hover:bg-[#b8ef00] flex items-center gap-1.5"
+                                                >
+                                                    <FiCheck />
+                                                    Mark as Done
+                                                </button>
+
+                                            </div>
+
+                                            {/* X Button */}
+                                            <button
+                                                className="p-2 text-gray-500 transition hover:border-red-400 hover:text-red-400"
+                                                aria-label={`Remove ${workout.name}`}
+                                            >
+                                                <FiX />
+                                            </button>
+                                        </div>
                                     </div>
 
-
                                     {/* Stats */}
-                                    <div className="mt-auto flex flex-wrap gap-4 pt-4">
+                                    <div className="mt-auto flex flex-wrap gap-4 pt-3">
 
-                                        <div className="flex items-center gap-1.5 text-[10px] text-gray-500">
+                                        <div className="flex items-center gap-1.5 text-sm text-gray-500">
                                             <FiClock className="text-[#c7ff00]" />
                                             {workout.duration} min
                                         </div>
 
-                                        <div className="flex items-center gap-1.5 text-[10px] text-gray-500">
-                                            <MdLocalFireDepartment className="text-red-500" />
+                                        <div className="flex items-center gap-1.5 text-sm text-gray-500">
+                                            <MdLocalFireDepartment className="text-[#c7ff00]" />
                                             {workout.caloriesBurned} kcal
                                         </div>
 
-                                        <div className="text-[10px] text-gray-500">
-                                            {workout.sets} sets × {workout.reps}
+                                        <div className="flex items-center gap-1.5 text-sm text-gray-500">
+                                            <FiStar className="text-[#c7ff00]" />
+                                            {workout.rating}
                                         </div>
 
                                     </div>
 
                                 </div>
+
 
                             </div>
                         ))}

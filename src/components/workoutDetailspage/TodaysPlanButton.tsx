@@ -14,7 +14,7 @@ const TodaysPlanButton = ({workout}: {workout: ILibrary}) => {
     const handleTodaysPlan = () => {
         console.log("todays plan button clicked", workout);
         setTodaysPlan([...todaysPlan, workout]);
-        toast.success(`You have Added "${workout.name}" successfully`)
+        toast.success(`Add to Today's Plan`)
     }
     return (
         <button className="btn h-10 min-h-10 rounded-lg border-0 bg-[#c7ff00] px-4 text-xs font-bold text-black hover:bg-[#b9f000]" onClick={() => handleTodaysPlan()}>
