@@ -12,14 +12,28 @@ import {
     FiX
 } from "react-icons/fi";
 import { MdLocalFireDepartment } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const MyPlanPage = () => {
-    const { todaysPlan, save } = useContext(WorkoutsContext);
+    const { todaysPlan, setTodaysPlan, save, setSave } = useContext(WorkoutsContext);
 
     const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
 
     const plan: ILibrary[] =
         activeTab === "today" ? todaysPlan : save;
+    const handleRemove = (id: number) => {
+        if (activeTab === "today") {
+            setTodaysPlan((prev) =>
+                prev.filter((workout) => workout.id !== id)
+            );
+            toast.success("Removed from Today's Plan");
+        } else {
+            setSave((prev) =>
+                prev.filter((workout) => workout.id !== id)
+            );
+            toast.success("Removed from Saved");
+        }
+    };
 
     // Calculate summary
     const totalMinutes = plan.reduce(
@@ -98,8 +112,8 @@ const MyPlanPage = () => {
                         <button
                             onClick={() => setActiveTab("today")}
                             className={`rounded-md px-4 py-2 text-sm font-medium transition cursor-pointer ${activeTab === "today"
-                                    ? "bg-[#252830] text-white"
-                                    : "text-gray-400 hover:text-white"
+                                ? "bg-[#252830] text-[#c7ff00]"
+                                : "text-white"
                                 }`}
                         >
                             Today's Plan
@@ -108,8 +122,8 @@ const MyPlanPage = () => {
                         <button
                             onClick={() => setActiveTab("saved")}
                             className={`rounded-md px-4 py-2 text-sm font-medium transition cursor-pointer ${activeTab === "saved"
-                                    ? "bg-[#252830] text-white"
-                                    : "text-gray-400 hover:text-white"
+                                ? "bg-[#252830] text-[#c7ff00]"
+                                : "text-white"
                                 }`}
                         >
                             Saved
@@ -128,7 +142,6 @@ const MyPlanPage = () => {
                             <option>Duration</option>
                             <option>Calories</option>
                             <option>Rating</option>
-                            <option>Name</option>
                         </select>
                     </div>
 
@@ -139,7 +152,7 @@ const MyPlanPage = () => {
                 {plan.length === 0 ? (
 
                     /* EMPTY STATE */
-                    <section className="mt-3 flex min-h-[300px] flex-col items-center justify-center rounded-xl border border-dashed border-[#282c34] bg-[#101216] text-center">
+                    <section className="mt-3 flex min-h-75 flex-col items-center justify-center rounded-xl border border-dashed border-[#282c34] bg-[#101216] text-center">
 
                         <h2 className="mt-4 text-md font-black">
                             NOTHING HERE YET
@@ -171,7 +184,7 @@ const MyPlanPage = () => {
                             >
 
                                 {/* Image */}
-                                <div className="m-3 aspect-[3/2] w-32 shrink-0 overflow-hidden rounded-xl sm:w-40">
+                                <div className="m-3 aspect-3/2 w-32 shrink-0 overflow-hidden rounded-xl sm:w-40">
                                     <Image
                                         src={workout.image}
                                         alt={workout.name}
@@ -208,18 +221,21 @@ const MyPlanPage = () => {
                                                     View Details
                                                 </Link>
 
-                                                <button
-                                                    className="rounded-2xl bg-[#c7ff00] px-3 py-2 text-xs font-bold text-black transition hover:bg-[#b8ef00] flex items-center gap-1.5"
-                                                >
-                                                    <FiCheck />
-                                                    Mark as Done
-                                                </button>
+                                                {activeTab === "today" && (
+                                                    <button
+                                                        className="rounded-2xl bg-[#c7ff00] px-3 py-2 text-xs font-bold text-black transition hover:bg-[#b8ef00] flex items-center gap-1.5 cursor-pointer"
+                                                    >
+                                                        <FiCheck />
+                                                        Mark as Done
+                                                    </button>
+                                                )}
 
                                             </div>
 
                                             {/* X Button */}
                                             <button
-                                                className="p-2 text-gray-500 transition hover:border-red-400 hover:text-red-400"
+                                            onClick={() => handleRemove(workout.id)}
+                                                className="p-2 text-gray-500 transition hover:border-red-400 hover:text-red-400 cursor-pointer"
                                                 aria-label={`Remove ${workout.name}`}
                                             >
                                                 <FiX />

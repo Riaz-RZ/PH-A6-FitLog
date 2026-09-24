@@ -1,6 +1,9 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
+import { useContext } from "react";
+import { WorkoutsContext } from "@/context/WorkoutsContext";
 
 const Navbar = () => {
     const links = (
@@ -23,6 +26,10 @@ const Navbar = () => {
             </li>
         </>
     );
+    const { todaysPlan, save } = useContext(WorkoutsContext);
+
+    const planCount = todaysPlan.length;
+    const savedCount = save.length;
 
     return (
         <nav className="sticky top-0 z-50 bg-black shadow-xs border-b border-gray-600">
@@ -64,8 +71,12 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end gap-4">
-                    <a className=" text-gray-400">Plan</a>
-                    <a className="text-gray-400">Saved</a>
+                    <button className=" text-gray-400 me-4 px-4 py-0.5">Plan<span className="badge badge-sm bg-[#c7ff00] text-black border-0 mx-3 font-bold">
+                                    {planCount}
+                                </span></button>
+                    <button className="text-gray-400 px-4 py-0.5">Saved<span className="badge badge-sm bg-black text-white border-2 mx-3 font-bold">
+                                    {savedCount}
+                                </span></button>
                 </div>
             </div>
         </nav>
