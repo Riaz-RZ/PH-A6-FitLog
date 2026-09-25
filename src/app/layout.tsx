@@ -36,7 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             position="top-right"
             autoClose={2000}
             toastClassName="!w-[260px] !min-h-0"
-            bodyClassName="text-sm" />
+            className="text-sm" />
         </WorkoutsProvider>
 
       </body>
