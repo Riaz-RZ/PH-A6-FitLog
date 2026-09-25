@@ -91,7 +91,7 @@ const Navbar = () => {
                         }}
                         className="text-gray-400 me-4 px-4 py-0.5"
                     >
-                        Plan<span className="badge badge-sm bg-[#c7ff00] text-black border-0 mx-3 font-bold">
+                        Plan<span className="badge badge-sm bg-[#ccff00] text-black border-0 mx-3 font-bold">
                         {planCount}
                         </span>
                     </Link>

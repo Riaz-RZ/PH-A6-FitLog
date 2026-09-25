@@ -70,6 +70,13 @@ const MyPlanPage = () => {
         }
     };
 
+    const handleMarkAsDone = (id: number) => {
+        setTodaysPlan((prev) =>
+            prev.filter((workout) => workout.id !== id)
+        );
+        toast.success("Workout marked as done");
+    };
+
     // Calculate summary
     const totalMinutes = plan.reduce(
         (total, workout) => total + workout.duration,
@@ -262,6 +269,7 @@ const MyPlanPage = () => {
 
                                                 {activeTab === "today" && (
                                                     <button
+                                                        onClick={() => handleMarkAsDone(workout.id)}
                                                         className="rounded-2xl bg-[#c7ff00] px-3 py-2 text-xs font-bold text-black transition hover:bg-[#b8ef00] flex items-center gap-1.5 cursor-pointer"
                                                     >
                                                         <FiCheck />
